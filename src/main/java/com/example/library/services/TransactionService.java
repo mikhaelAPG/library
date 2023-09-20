@@ -52,8 +52,6 @@ public class TransactionService {
             } else {
                 return false;
             }
-        } else {
-            return false;
         }
         return true;
     }
@@ -76,5 +74,17 @@ public class TransactionService {
             return false;
         }
         return true;
+    }
+
+    public List<Object[]> getTop5MostBorrowedBooks() {
+        return transactionRepository.findTop5MostBorrowedBooks();
+    }
+
+    public List<Object[]> getTop3MembersMostBorrowedBooksInMonth(int month) {
+        return transactionRepository.findTop3MembersMostBorrowedBooksInMonth(month);
+    }
+
+    public List<Object[]> getTop3MembersMostLateReturns() {
+        return transactionRepository.findTop3MembersMostLateReturns();
     }
 }

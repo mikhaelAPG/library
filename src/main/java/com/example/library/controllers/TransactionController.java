@@ -10,20 +10,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
     @Autowired
     private TransactionService transactionService;
-
-    @GetMapping
-    public ResponseEntity getTransactions() {
-        return ResponseEntity.status(HttpStatus.OK).body(transactionService.transactionList());
-    }
 
     @PostMapping("")
     public ResponseEntity addTransaction(@RequestBody TransactionRequest request) throws ParseException {
@@ -41,5 +38,23 @@ public class TransactionController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to Add Transaction.");
         }
+    }
+
+    @GetMapping("/top5-most-borrowed")
+    public List<Object[]> getTop5MostBorrowedBooks() {
+        List<Object[]> top5Books = transactionService.getTop5MostBorrowedBooks();
+        return top5Books;
+    }
+
+    @GetMapping("/top3-most-borrowed")
+    public List<Object[]> getTop3MembersMostBorrowedBooksInMonth(@RequestParam("month") int month) {
+        List<Object[]> top3MembersData = transactionService.getTop3MembersMostBorrowedBooksInMonth(month);
+        return top3MembersData;
+    }
+
+    @GetMapping("/top3-most-late-returns")
+    public List<Object[]> getTop3MembersMostLateReturns() {
+        List<Object[]> top3MembersData = transactionService.getTop3MembersMostLateReturns();
+        return top3MembersData;
     }
 }
