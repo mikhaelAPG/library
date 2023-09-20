@@ -16,7 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends BaseClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,14 +25,9 @@ public class User {
     private String phone;
     private String address;
     private String type;
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Transaction> transactions;
-    @CreationTimestamp
-    @Column(name = "create_date")
-    private Date createDate;
-    @UpdateTimestamp
-    @Column(name = "update_date")
-    private Date updateDate;
     @JsonIgnore
     @Column(name = "deleted_at", columnDefinition = "DATE DEFAULT NULL")
     private Date deletedAt;
@@ -102,22 +97,6 @@ public class User {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
     }
 
     public Date getDeletedAt() {

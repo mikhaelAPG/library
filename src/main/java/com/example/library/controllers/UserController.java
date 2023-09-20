@@ -1,6 +1,6 @@
 package com.example.library.controllers;
 
-import com.example.library.dto.UserRequest;
+import com.example.library.dto.request.UserRequest;
 import com.example.library.model.User;
 import com.example.library.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

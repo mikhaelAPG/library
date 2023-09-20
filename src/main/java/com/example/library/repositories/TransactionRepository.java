@@ -11,11 +11,11 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     @Query(value = "SELECT EXTRACT(DAY FROM(return_date-due_date)) AS DIff FROM transactions WHERE id = ?1", nativeQuery = true)
     public Integer getDifferentDate(Long id);
-    List<Transaction> findAllByDeletedAtIsNull();
-    @Query(value = "SELECT t.book_id, COUNT(*) AS total_borrowing FROM transactions t GROUP BY t.book_id ORDER BY total_borrowing DESC LIMIT 5", nativeQuery = true)
+    @Query(value = "SELECT b.title AS book_title, COUNT(*) AS total_borrowing FROM transactions t JOIN books b ON t.book_id = b.id GROUP BY b.title ORDER BY total_borrowing ASC LIMIT 5", nativeQuery = true)
     List<Object[]> findTop5MostBorrowedBooks();
-    @Query(value = "SELECT user_id, COUNT(*) as total_borrowed_books FROM transactions WHERE EXTRACT(MONTH FROM borrowing_date) = 12 GROUP BY user_id ORDER BY total_borrowed_books DESC LIMIT 3", nativeQuery = true)
+    @Query(value = "SELECT u.name, COUNT(*) AS total_borrowed_books FROM transactions t JOIN users u ON t.user_id = u.id WHERE EXTRACT(MONTH FROM t.borrowing_date) = ? GROUP BY u.name ORDER BY total_borrowed_books ASC LIMIT 3", nativeQuery = true)
     List<Object[]> findTop3MembersMostBorrowedBooksInMonth(int month);
-    @Query(value = "SELECT user_id, SUM(penalty) as total_penalty FROM transactions WHERE return_date IS NOT NULL GROUP BY user_id ORDER BY total_penalty DESC LIMIT 3", nativeQuery = true)
+    @Query(value = "SELECT u.name, SUM(t.penalty) AS total_penalty FROM transactions t JOIN users u ON t.user_id = u.id WHERE t.return_date IS NOT NULL GROUP BY u.name ORDER BY total_penalty ASC LIMIT 3", nativeQuery = true)
     List<Object[]> findTop3MembersMostLateReturns();
+    List<Transaction> findAllByReturnDateIsNotNull();
 }

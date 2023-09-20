@@ -1,6 +1,6 @@
 package com.example.library.services;
 
-import com.example.library.dto.UserRequest;
+import com.example.library.dto.request.UserRequest;
 import com.example.library.model.User;
 import com.example.library.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +33,21 @@ public class UserService {
 
     // Fungsi untuk menambah data user(member/employee)
     public User addUser(UserRequest request) {
+        // Validasi input
+        if (isEmptyOrSpace(request.getName()) || isEmptyOrSpace(request.getAddress())
+                || !isValidGender(request.getGender()) || !isValidPhoneNumber(request.getPhone())
+                || !isValidUserType(request.getType()) || containsSpecialCharacter(request.getName())) {
+            // Jika salah satu validasi tidak terpenuhi, kembalikan null
+            return null;
+        }
+
         User user = new User();
         user.setName(request.getName());
         user.setAddress(request.getAddress());
         user.setGender(request.getGender());
         user.setPhone(request.getPhone());
         user.setType(request.getType());
+
         return userRepository.save(user);
     }
 
@@ -49,6 +58,14 @@ public class UserService {
         if (!user.isPresent()) {
             return false;
         } else {
+            // Validasi input
+            if (isEmptyOrSpace(request.getName()) || isEmptyOrSpace(request.getAddress())
+                    || !isValidGender(request.getGender()) || !isValidPhoneNumber(request.getPhone())
+                    || !isValidUserType(request.getType()) || containsSpecialCharacter(request.getName())) {
+                // Jika salah satu validasi tidak terpenuhi, kembalikan false
+                return false;
+            }
+
             user.get().setName(request.getName());
             user.get().setAddress(request.getAddress());
             user.get().setGender(request.getGender());
@@ -58,6 +75,7 @@ public class UserService {
             return true;
         }
     }
+
 
     // Fungsi untuk menghapus data user(member/employee)
     public boolean deleteUser(Long id) {
@@ -70,5 +88,32 @@ public class UserService {
             userRepository.save(user.get());
             return true;
         }
+    }
+
+    // Fungsi untuk validasi apakah string null, kosong, atau hanya spasi
+    private boolean isEmptyOrSpace(String str) {
+        return str == null || str.trim().isEmpty();
+    }
+
+    // Fungsi untuk validasi apakah nomor telepon adalah angka dan memiliki panjang antara 10 hingga 13 karakter
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        return phoneNumber.matches("^\\d{10,13}$");
+    }
+
+    // Fungsi untuk validasi apakah sebuah string mengandung karakter khusus
+    private boolean containsSpecialCharacter(String str) {
+        return !str.matches("^[a-zA-Z0-9\\s]*$");
+    }
+
+    // Fungsi untuk validasi apakah Type adalah "staff" atau "member"
+    private boolean isValidUserType(String type) {
+        return "staff".equalsIgnoreCase(type) || "member".equalsIgnoreCase(type);
+    }
+
+    // Fungsi untuk validasi apakah Gender adalah nilai yang valid
+    private boolean isValidGender(String gender) {
+        // periksa apakah sama dengan "male" atau "female" atau "other"
+        String lowerCaseGender = gender.toLowerCase();
+        return "male".equals(lowerCaseGender) || "female".equals(lowerCaseGender) || "other".equals(lowerCaseGender);
     }
 }

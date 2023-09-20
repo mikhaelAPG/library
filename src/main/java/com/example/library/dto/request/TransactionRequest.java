@@ -1,8 +1,13 @@
-package com.example.library.dto;
+package com.example.library.dto.request;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class TransactionRequest {
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ", timezone = "Asia/Jakarta")
     private String borrowingDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ", timezone = "Asia/Jakarta")
     private String dueDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ", timezone = "Asia/Jakarta")
     private String returnDate;
     private Long userId;
     private Long bookId;

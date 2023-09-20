@@ -1,6 +1,10 @@
 package com.example.library.controllers;
 
-import com.example.library.dto.TransactionRequest;
+import com.example.library.dto.request.TransactionRequest;
+import com.example.library.dto.response.AllTransactionResponse;
+import com.example.library.dto.response.TopBorrowedBookResponse;
+import com.example.library.dto.response.TopLateReturnResponse;
+import com.example.library.dto.response.TopMemberBorrowedBookResponse;
 import com.example.library.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +26,24 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
+    @GetMapping("/top5-most-borrowed-books")
+    public List<TopBorrowedBookResponse> getTop5MostBorrowedBooks() {
+        List<TopBorrowedBookResponse> top5Books = transactionService.getTop5MostBorrowedBooks();
+        return top5Books;
+    }
+
+    @GetMapping("/top3-most-borrowed")
+    public List<TopMemberBorrowedBookResponse> getTop3MembersMostBorrowedBooksInMonth(@RequestParam("month") int month) {
+        List<TopMemberBorrowedBookResponse> top3MembersData = transactionService.getTop3MembersMostBorrowedBooksInMonth(month);
+        return top3MembersData;
+    }
+
+    @GetMapping("/top3-most-late-returns")
+    public List<TopLateReturnResponse> getTop3MembersMostLateReturnsDTO() {
+        List<TopLateReturnResponse> top3MembersData = transactionService.getTop3MembersMostLateReturnsDTO();
+        return top3MembersData;
+    }
+
     @PostMapping("")
     public ResponseEntity addTransaction(@RequestBody TransactionRequest request) throws ParseException {
         if (transactionService.addTransaction(request)) {
@@ -40,21 +62,15 @@ public class TransactionController {
         }
     }
 
-    @GetMapping("/top5-most-borrowed")
-    public List<Object[]> getTop5MostBorrowedBooks() {
-        List<Object[]> top5Books = transactionService.getTop5MostBorrowedBooks();
-        return top5Books;
+    @GetMapping("/all-transactions")
+    public List<AllTransactionResponse> getAllTransactionsDTO() {
+        List<AllTransactionResponse> transactions = transactionService.getAllTransactionsDTO();
+        return transactions;
     }
 
-    @GetMapping("/top3-most-borrowed")
-    public List<Object[]> getTop3MembersMostBorrowedBooksInMonth(@RequestParam("month") int month) {
-        List<Object[]> top3MembersData = transactionService.getTop3MembersMostBorrowedBooksInMonth(month);
-        return top3MembersData;
-    }
-
-    @GetMapping("/top3-most-late-returns")
-    public List<Object[]> getTop3MembersMostLateReturns() {
-        List<Object[]> top3MembersData = transactionService.getTop3MembersMostLateReturns();
-        return top3MembersData;
+    @GetMapping("/returned-transactions")
+    public List<AllTransactionResponse> getReturnedTransactionsDTO() {
+        List<AllTransactionResponse> returnedTransactions = transactionService.getReturnedTransactionsDTO();
+        return returnedTransactions;
     }
 }

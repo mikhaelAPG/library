@@ -6,7 +6,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,7 +16,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "transactions")
-public class Transaction {
+public class Transaction extends BaseClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,17 +30,13 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "book_id", referencedColumnName = "id")
     private Book book;
-    @CreationTimestamp
-    @Column(name = "create_date")
-    private Date createDate;
-    @UpdateTimestamp
-    @Column(name = "update_date")
-    private Date updateDate;
-    @JsonIgnore
-    @Column(name = "deleted_at", columnDefinition = "DATE DEFAULT NULL")
-    private Date deletedAt;
 
     public Transaction() {
+    }
+
+    public Transaction(Date borrowingDate, Date dueDate, Long userId, Long BookId) {
+        this.borrowingDate = borrowingDate;
+        this.dueDate = dueDate;
     }
 
     public Long getId() {
@@ -98,29 +93,5 @@ public class Transaction {
 
     public void setBook(Book book) {
         this.book = book;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public Date getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(Date deletedAt) {
-        this.deletedAt = deletedAt;
     }
 }

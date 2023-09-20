@@ -1,4 +1,4 @@
-package com.example.library.dto;
+package com.example.library.dto.request;
 
 public class UserRequest {
     private String name;
