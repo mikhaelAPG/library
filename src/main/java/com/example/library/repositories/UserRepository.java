@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAllByDeletedAtIsNull();
-    @Query("SELECT u FROM User u WHERE u.type = :type")
+    Optional<User> findByIdAndDeletedAtIsNull(Long id);
+    @Query("SELECT u FROM User u WHERE u.type = :type AND u.deletedAt IS NULL")
     List<User> findByType(String type);
 }

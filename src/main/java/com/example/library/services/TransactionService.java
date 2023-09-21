@@ -140,7 +140,7 @@ public class TransactionService {
     }
 
     public List<AllTransactionResponse> getAllTransactionsDTO() {
-        List<Transaction> transactions = transactionRepository.findAll();
+        List<Transaction> transactions = transactionRepository.findAllByReturnDateIsNotNullAndUserDeletedAtIsNotNullAndBookDeletedAtIsNotNull();
         List<AllTransactionResponse> transactionResponses = new ArrayList<>();
 
         for (Transaction transaction : transactions) {
@@ -156,7 +156,7 @@ public class TransactionService {
     }
 
     public List<AllTransactionResponse> getReturnedTransactionsDTO() {
-        List<Transaction> returnedTransactions = transactionRepository.findAllByReturnDateIsNotNull();
+        List<Transaction> returnedTransactions = transactionRepository.findAllByReturnDateIsNotNullAndUserDeletedAtIsNotNullAndBookDeletedAtIsNotNull();
         List<AllTransactionResponse> returnedTransactionResponses = new ArrayList<>();
 
         for (Transaction transaction : returnedTransactions) {

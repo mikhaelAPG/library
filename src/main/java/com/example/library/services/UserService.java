@@ -17,12 +17,12 @@ public class UserService {
 
     // Fungsi untuk menampilkan seluruh data user(member/employee)
     public List<User> userList() {
-        return userRepository.findAll();
+        return userRepository.findAllByDeletedAtIsNull();
     }
 
     // Fungsi untuk menampikan data user(member/employee) berdasarkan id
     public User getUserById(Long id) {
-        Optional<User> users = userRepository.findById(id);
+        Optional<User> users = userRepository.findByIdAndDeletedAtIsNull(id);
 
         if (users.isPresent()) {
             return users.get();

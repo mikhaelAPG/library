@@ -19,12 +19,12 @@ public class BookService {
 
     // Fungsi untuk menampilkan seluruh data buku
     public List<Book> bookList() {
-        return bookRepository.findAll();
+        return bookRepository.findAllByDeletedAtIsNull();
     }
 
     // Fungsi untuk menampilkan data buku berdasarkan id
     public Book getBookById(long id) {
-        Optional<Book> book = bookRepository.findById(id);
+        Optional<Book> book = bookRepository.findByIdAndDeletedAtIsNull(id);
 
         if (book.isPresent()) {
             return book.get();
