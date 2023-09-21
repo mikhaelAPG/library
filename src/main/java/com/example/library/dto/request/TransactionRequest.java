@@ -1,12 +1,18 @@
 package com.example.library.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TransactionRequest {
+    @JsonProperty("borrowing_date")
     private String borrowingDate;
+    @JsonProperty("due_date")
     private String dueDate;
+    @JsonProperty("return_date")
     private String returnDate;
+    @JsonProperty("user_id")
     private Long userId;
+    @JsonProperty("book_id")
     private Long bookId;
 
     public String getBorrowingDate() {

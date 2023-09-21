@@ -1,11 +1,15 @@
 package com.example.library.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class AllTransactionResponse {
-
+    @JsonProperty("borrowing_date")
     private Date borrowingDate;
+    @JsonProperty("due_date")
     private Date dueDate;
+    @JsonProperty("return_date")
     private Date returnDate;
     private Double penalty;
 
