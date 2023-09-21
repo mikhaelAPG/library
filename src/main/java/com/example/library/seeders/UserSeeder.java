@@ -20,11 +20,11 @@ public class UserSeeder {
     @Transactional
     public void seed() {
         List<User> users = new ArrayList<>(Arrays.asList(
-                new User("James", "Male", "08123131241", "Jalan Semangka", "Member"),
-                new User("Kevin", "Male", "08122231241", "Jalan Melon", "Member"),
-                new User("Jake", "Male", "08111131241", "Jalan Nanas", "Member"),
-                new User("Mary", "Female", "08133131241", "Jalan Mangga", "Member"),
-                new User("Kath", "Female", "0811121441", "Jalan Anggur", "Staff")
+                new User("James", "Male", "08123131221", "Jalan Semangka", "Member"),
+                new User("Kevin", "Male", "08122231231", "Jalan Melon", "Member"),
+                new User("Jake", "Male", "08111131211", "Jalan Nanas", "Staff"),
+                new User("Mary", "Female", "08133131251", "Jalan Mangga", "Member"),
+                new User("Kath", "Female", "0811121461", "Jalan Anggur", "Staff")
         ));
 
         if (userRepository.findAllByDeletedAtIsNull().isEmpty()) {

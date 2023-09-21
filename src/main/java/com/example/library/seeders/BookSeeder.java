@@ -20,11 +20,11 @@ public class BookSeeder {
     @Transactional
     public void seed() {
         List<Book> books = new ArrayList<>(Arrays.asList(
-                new Book("112233445566", "The Great", "History", "Scott", "2014", "Boby", 4),
-                new Book("112211446655", "The Duck", "Biology", "Jeffry", "2015", "Bob", 3),
-                new Book("2211133445566", "The Money", "Finance", "Marry", "2012", "Mira", 5),
-                new Book("2211133445511", "The Harry", "Comedy", "Adam", "2016", "Nathan", 2),
-                new Book("3311133445566", "The Catcher", "Fantasy", "George", "2017", "Miguel", 3)
+                new Book("112233445566", "The Great", "History", "Gramedia", "2014", "Boby", 4),
+                new Book("112211446655", "The Duck", "Biology", "Gramedia", "2015", "Bob", 3),
+                new Book("2211133445566", "The Money", "Finance", "Gramedia", "2012", "Mira", 5),
+                new Book("2211133445511", "The Harry", "Comedy", "Erlangga", "2016", "Nathan", 1),
+                new Book("3311133445566", "The Catcher", "Fantasy", "Erlangga", "2017", "Miguel", 3)
         ));
 
         if (bookRepository.findAllByDeletedAtIsNull().isEmpty()) {

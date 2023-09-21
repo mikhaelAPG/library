@@ -52,7 +52,7 @@ public class BookController {
     @PutMapping("/{id}")
     public ResponseEntity updateBook(@PathVariable long id, @RequestBody BookRequest request) {
         if (bookService.updateBook(id, request)) {
-            return ResponseEntity.status(HttpStatus.OK).body("Major Updated Successfully.");
+            return ResponseEntity.status(HttpStatus.OK).body("Book Updated Successfully.");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to Update Major.");
         }
@@ -61,7 +61,7 @@ public class BookController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteBook(@PathVariable long id) {
         if (bookService.deleteBook(id)) {
-            return ResponseEntity.status(HttpStatus.OK).body( "Major Deleted Successfully.");
+            return ResponseEntity.status(HttpStatus.OK).body( "Book Deleted Successfully.");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to Delete Major.");
         }

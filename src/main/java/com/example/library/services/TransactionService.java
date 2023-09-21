@@ -131,7 +131,7 @@ public class TransactionService {
 
         for (Object[] data : top3MembersData) {
             String memberName = data[0].toString(); // Konversi dari BigInteger ke String
-            Double lateReturnsCountDouble = (Double) data[1]; // Konversi dari Double ke Double
+            Double lateReturnsCountDouble = (Double) data[1]; // Konversi dari BigInteger ke Double
             BigDecimal lateReturnsCount = BigDecimal.valueOf(lateReturnsCountDouble); // Konversi Double ke BigDecimal
             top3Members.add(new TopLateReturnResponse(memberName, lateReturnsCount.intValue())); // Konversi BigDecimal ke Integer
         }
