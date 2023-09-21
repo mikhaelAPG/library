@@ -149,6 +149,7 @@ public class BookService {
     }
 
     // Fungsi untuk memeriksa apakah ISBN sudah ada dalam basis data
+    // existingbokks.kalu ketemu maka akan dibuat return false agar menampilkan pesan gagal
     private boolean isIsbnExists(String isbn) {
         List<Book> existingBooks = bookRepository.findByIsbn(isbn);
         return !existingBooks.isEmpty();

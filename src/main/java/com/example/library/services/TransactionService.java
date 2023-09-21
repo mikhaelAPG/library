@@ -50,11 +50,6 @@ public class TransactionService {
             Date borrowingDate = new SimpleDateFormat("dd/MM/yyyy").parse(request.getBorrowingDate());
             Date dueDate = new SimpleDateFormat("dd/MM/yyyy").parse(request.getDueDate());
 
-            // Validasi dueDate harus setelah borrowingDate
-            if (dueDate.before(borrowingDate)) {
-                return false;
-            }
-
             Transaction transaction = new Transaction();
             transaction.setBorrowingDate(borrowingDate);
             transaction.setDueDate(dueDate);
