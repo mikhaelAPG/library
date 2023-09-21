@@ -54,7 +54,7 @@ public class BookController {
         if (bookService.updateBook(id, request)) {
             return ResponseEntity.status(HttpStatus.OK).body("Book Updated Successfully.");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to Update Major.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to Update Book.");
         }
     }
 
@@ -63,7 +63,7 @@ public class BookController {
         if (bookService.deleteBook(id)) {
             return ResponseEntity.status(HttpStatus.OK).body( "Book Deleted Successfully.");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to Delete Major.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to Delete Book.");
         }
     }
 
