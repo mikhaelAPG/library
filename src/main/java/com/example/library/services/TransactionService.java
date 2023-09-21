@@ -40,7 +40,6 @@ public class TransactionService {
     public Boolean addTransaction(TransactionRequest request) throws ParseException {
         if (request.getUserId() == null || request.getBookId() == null
                 || isEmptyOrSpace(request.getBorrowingDate()) || isEmptyOrSpace(request.getDueDate())) {
-            // Jika salah satu input adalah null atau string kosong, Anda dapat mengembalikan false
             return false;
         }
 
@@ -77,7 +76,6 @@ public class TransactionService {
     // Fungsi untuk menambahkan data return date pada transaksi
     public Boolean bookReturn(Long id, TransactionRequest request) throws ParseException {
         if (isEmptyOrSpace(request.getReturnDate())) {
-            // Jika returnDate adalah null atau string kosong, Anda dapat mengembalikan false
             return false;
         }
 

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -62,6 +64,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body( "User Deleted Successfully.");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to Delete User.");
+        }
+    }
+
+    @GetMapping("/by-type/{type}")
+    public ResponseEntity getUsersByType(@PathVariable String type) {
+        List<User> users = userService.getUsersByType(type);
+
+        if (!users.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.OK).body(users);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Users Found with Type: " + type);
         }
     }
 }

@@ -35,7 +35,6 @@ public class BookService {
 
     // Fungsi untuk menambah data buku
     public Book addBook(BookRequest request) {
-        // Validasi input
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         if (isEmptyOrSpace(request.getTitle()) || isEmptyOrSpace(request.getAuthor())
                 || isEmptyOrSpace(request.getCategory())
@@ -47,15 +46,13 @@ public class BookService {
             return null;
         }
 
-        // Validasi ISBN
+        // Periksa apakah ISBN terdiri dari 13 karakter
         if (!isValidIsbn(request.getIsbn())) {
-            // Jika ISBN tidak valid, Anda dapat mengembalikan null atau nilai lain yang sesuai
             return null;
         }
 
-        // Periksa apakah ISBN sudah ada dalam basis data
+        // Periksa apakah ISBN sudah ada dalam database
         if (isIsbnExists(request.getIsbn())) {
-            // ISBN sudah ada dalam basis data, Anda dapat mengembalikan null atau nilai lain yang sesuai
             return null;
         }
 
@@ -78,7 +75,6 @@ public class BookService {
         if (!book.isPresent()) {
             return false;
         } else {
-            // Validasi input
             int currentYear = Calendar.getInstance().get(Calendar.YEAR);
             if (isEmptyOrSpace(request.getTitle()) || isEmptyOrSpace(request.getAuthor())
                     || isEmptyOrSpace(request.getCategory())
@@ -87,7 +83,7 @@ public class BookService {
                     || request.getStock() < 0 || Integer.parseInt(request.getYear()) < 0
                     || Integer.parseInt(request.getYear()) > currentYear
                     || !isAlphaNumericWithSpaces(request.getAuthor())) {
-                return false; // Kembalikan false jika ada validasi yang tidak terpenuhi
+                return false;
             }
 
             book.get().setTitle(request.getTitle());
@@ -113,6 +109,26 @@ public class BookService {
             bookRepository.save(book.get());
             return true;
         }
+    }
+
+    // Fungsi untuk mendapatkan daftar buku berdasarkan kategori
+    public List<Book> getBooksByCategory(String category) {
+        return bookRepository.findByCategory(category);
+    }
+
+    // Fungsi untuk mendapatkan daftar buku berdasarkan tahun
+    public List<Book> getBooksByYear(String year) {
+        return bookRepository.findByYear(year);
+    }
+
+    // Fungsi untuk mendapatkan daftar buku berdasarkan penerbit (publisher)
+    public List<Book> getBooksByPublisher(String publisher) {
+        return bookRepository.findByPublisher(publisher);
+    }
+
+    // Fungsi untuk mendapatkan daftar buku berdasarkan penulis (author)
+    public List<Book> getBooksByAuthor(String author) {
+        return bookRepository.findByAuthor(author);
     }
 
     // Fungsi untuk validasi apakah string null, kosong, atau hanya spasi

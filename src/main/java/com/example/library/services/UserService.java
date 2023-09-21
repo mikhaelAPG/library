@@ -90,6 +90,11 @@ public class UserService {
         }
     }
 
+    // Fungsi untuk mendapatkan daftar pengguna berdasarkan tipe (type)
+    public List<User> getUsersByType(String type) {
+        return userRepository.findByType(type);
+    }
+
     // Fungsi untuk validasi apakah string null, kosong, atau hanya spasi
     private boolean isEmptyOrSpace(String str) {
         return str == null || str.trim().isEmpty();
@@ -100,7 +105,7 @@ public class UserService {
         return phoneNumber.matches("^\\d{10,13}$");
     }
 
-    // Fungsi untuk validasi apakah sebuah string mengandung karakter khusus
+    // Fungsi untuk validasi apakah sebuah string mengandung karakter special
     private boolean containsSpecialCharacter(String str) {
         return !str.matches("^[a-zA-Z0-9\\s]*$");
     }
@@ -110,9 +115,8 @@ public class UserService {
         return "staff".equalsIgnoreCase(type) || "member".equalsIgnoreCase(type);
     }
 
-    // Fungsi untuk validasi apakah Gender adalah nilai yang valid
+    // Fungsi untuk validasi apakah Gender adalah "male" atau "female" atau "other"
     private boolean isValidGender(String gender) {
-        // periksa apakah sama dengan "male" atau "female" atau "other"
         String lowerCaseGender = gender.toLowerCase();
         return "male".equals(lowerCaseGender) || "female".equals(lowerCaseGender) || "other".equals(lowerCaseGender);
     }
