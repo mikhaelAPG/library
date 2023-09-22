@@ -14,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "books")
-public class Book extends BaseClass {
+public class Book extends BaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

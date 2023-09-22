@@ -39,7 +39,7 @@ public class TransactionService {
     // Fungsi untuk menambahkan data transaksi
     public Boolean addTransaction(TransactionRequest request) throws ParseException {
         if (request.getUserId() == null || request.getBookId() == null
-                || isEmptyOrSpace(request.getBorrowingDate()) || isEmptyOrSpace(request.getDueDate())) {
+                || isEmptyOrSpace(request.getBorrowingDate()) || isEmptyOrSpace(request.getDueDate()) || request.getQuantity() <= 0) {
             return false;
         }
 
@@ -50,23 +50,27 @@ public class TransactionService {
             Date borrowingDate = new SimpleDateFormat("dd/MM/yyyy").parse(request.getBorrowingDate());
             Date dueDate = new SimpleDateFormat("dd/MM/yyyy").parse(request.getDueDate());
 
-            Transaction transaction = new Transaction();
-            transaction.setBorrowingDate(borrowingDate);
-            transaction.setDueDate(dueDate);
-            transaction.setBook(book.get());
-            transaction.setUser(user.get());
-            transactionRepository.save(transaction);
+            int requestedQuantity = request.getQuantity();
+            int currentStock = book.get().getStock();
 
-            Integer stockNow = book.get().getStock();
-            if (stockNow - 1 >= 0) {
-                book.get().setStock(book.get().getStock() - 1);
+            if (currentStock >= requestedQuantity) {
+                Transaction transaction = new Transaction();
+                transaction.setBorrowingDate(borrowingDate);
+                transaction.setDueDate(dueDate);
+                transaction.setBook(book.get());
+                transaction.setUser(user.get());
+                transaction.setQuantity(requestedQuantity); // Set jumlah buku yang dipinjam
+                transactionRepository.save(transaction);
+
+                book.get().setStock(currentStock - requestedQuantity); // Kurangi stok buku
                 bookRepository.save(book.get());
             } else {
-                return false;
+                return false; // Stok tidak mencukupi
             }
         }
         return true;
     }
+
 
     // Fungsi untuk menambahkan data return date pada transaksi
     public Boolean bookReturn(Long id, TransactionRequest request) throws ParseException {
@@ -91,7 +95,6 @@ public class TransactionService {
         }
         return true;
     }
-
 
     public List<TopBorrowedBookResponse> getTop5MostBorrowedBooks() {
         List<Object[]> top5BooksData = transactionRepository.findTop5MostBorrowedBooks();

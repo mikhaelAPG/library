@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "transactions")
-public class Transaction extends BaseClass {
+public class Transaction extends BaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,6 +19,7 @@ public class Transaction extends BaseClass {
     private Date dueDate;
     private Date returnDate;
     private Double penalty;
+    private Integer quantity;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -88,5 +89,13 @@ public class Transaction extends BaseClass {
 
     public void setBook(Book book) {
         this.book = book;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

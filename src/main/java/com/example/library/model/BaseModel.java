@@ -9,7 +9,7 @@ import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
 @MappedSuperclass
-public class BaseClass {
+public class BaseModel {
     @JsonIgnore
     @CreationTimestamp
     @Column(name = "create_date")

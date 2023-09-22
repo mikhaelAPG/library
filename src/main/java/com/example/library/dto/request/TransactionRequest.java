@@ -14,6 +14,7 @@ public class TransactionRequest {
     private Long userId;
     @JsonProperty("book_id")
     private Long bookId;
+    private int quantity;
 
     public String getBorrowingDate() {
         return borrowingDate;
@@ -53,5 +54,13 @@ public class TransactionRequest {
 
     public void setBookId(Long bookId) {
         this.bookId = bookId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
