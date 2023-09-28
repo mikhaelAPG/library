@@ -32,10 +32,6 @@ public class TransactionService {
     @Autowired
     private BookRepository bookRepository;
 
-    public List<Transaction> transactionList() {
-        return transactionRepository.findAll();
-    }
-
     // Fungsi untuk menambahkan data transaksi
     public Boolean addTransaction(TransactionRequest request) throws ParseException {
         if (request.getUserId() == null || request.getBookId() == null

@@ -19,6 +19,4 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     @Query(value = "SELECT u.name, SUM(t.penalty) AS total_penalty FROM transactions t JOIN users u ON t.user_id = u.id WHERE t.return_date IS NOT NULL AND u.deleted_at IS NULL GROUP BY u.name ORDER BY total_penalty ASC LIMIT 3", nativeQuery = true)
     List<Object[]> findTop3MembersMostLateReturns();
-
-    List<Transaction> findAllByReturnDateIsNotNullAndUserDeletedAtIsNotNullAndBookDeletedAtIsNotNull();
 }
